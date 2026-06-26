@@ -7,17 +7,17 @@ using Microsoft.AspNetCore.Mvc;
 public class AskGeminiController : ControllerBase
 {
 
-    private readonly AskGeminiService _genMatCheckService;
+    private readonly AskGeminiService _askGeminiService;
 
-    public AskGeminiController(AskGeminiService genMatCheckService)
+    public AskGeminiController(AskGeminiService askGeminiService)
     {
-        _genMatCheckService = genMatCheckService;
+        _askGeminiService = askGeminiService;
     }
 
     [HttpPost("ask")]
     public async Task<ActionResult<AskGeminiResDto>> AskSomethingToGemini(AskGeminiReqDto prompt)
     {
-        var res = await _genMatCheckService.AsktSomethingToGeminiAsync(prompt);
+        var res = await _askGeminiService.AsktSomethingToGeminiAsync(prompt);
 
         return Ok(new
         {
