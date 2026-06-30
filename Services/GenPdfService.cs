@@ -1,3 +1,4 @@
+using GeminiHubApi.DTOs;
 using QuestPDF.Companion;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
@@ -5,7 +6,7 @@ using QuestPDF.Infrastructure;
 
 public class GenPdfService
 {
-    public byte[] GenPdf()
+    public byte[] GenPdf(MissingMaterialDataReqDto dto)
     {
         QuestPDF.Settings.License = LicenseType.Community;
 
@@ -32,7 +33,7 @@ public class GenPdfService
                             .Column(col =>
                             {
                                 col.Item()
-                                    .Text("5th Grade - 2025/2026")
+                                    .Text($"{dto.GradeAndYear}")
                                     .FontSize(18)
                                     .LineHeight(2);
                                     
@@ -48,6 +49,7 @@ public class GenPdfService
                             });
                     });
 
+                // Pdf Body
                 page.Content()
                     .BorderTop(3)
                     .BorderColor("#00368a")
@@ -69,44 +71,64 @@ public class GenPdfService
                             .AlignCenter();
 
                         // Table start // 
-                        col.Item()
-                            .Padding(30)    
-                            .Table(table =>
-                            {
-                                table.ColumnsDefinition(col =>
+                        foreach(var data in dto.RequiredMaterials!)
+                        {
+                            col.Item()
+                                .Padding(15)    
+                                .Table(table =>
                                 {
-                                    col.RelativeColumn();
-                                    col.ConstantColumn(150);
+                                    table.ColumnsDefinition(col =>
+                                    {
+                                        col.RelativeColumn();
+                                        col.ConstantColumn(150);
+                                    });
+
+                                    table.Cell()
+                                        .ColumnSpan(2)
+                                        .Border(1)
+                                        .Background(Colors.Grey.Lighten2)
+                                        .Padding(8)
+                                        .AlignCenter()
+                                        .Text($"{data.Topic}")
+                                        .FontSize(18)
+                                        .Bold();
+
+                                    table.Cell()
+                                        .Border(1)
+                                        .Padding(5)
+                                        .AlignCenter()
+                                        .Text("Título / Title")
+                                        .FontSize(16)
+                                        .Bold();
+
+                                    table.Cell()
+                                        .Border(1)
+                                        .Padding(5)
+                                        .AlignCenter()
+                                        .Text("Qtd / Qty")
+                                        .FontSize(16)
+                                        .Bold();
+                                    
+                                    foreach(var material in data.Materials!)
+                                    {
+                                        table.Cell()
+                                            .Border(1)
+                                            .Padding(5)
+                                            .AlignCenter()
+                                            .Text($"{material.Title}")
+                                            .FontSize(16);
+                                        
+                                        table.Cell()
+                                            .Border(1)
+                                            .Padding(5)
+                                            .AlignCenter()
+                                            .Text($"{material.Quantity}")
+                                            .FontSize(16);
+                                    }
                                 });
+                            // Table End //
+                        }
 
-                                table.Cell()
-                                    .ColumnSpan(2)
-                                    .Border(1)
-                                    .Background(Colors.Grey.Lighten2)
-                                    .Padding(8)
-                                    .AlignCenter()
-                                    .Text("Texto qualquer para testes")
-                                    .FontSize(18)
-                                    .Bold();
-
-                                table.Cell()
-                                    .Border(1)
-                                    .Padding(5)
-                                    .AlignCenter()
-                                    .Text("Título / Title")
-                                    .FontSize(16)
-                                    .Bold();
-
-                                table.Cell()
-                                    .Border(1)
-                                    .Padding(5)
-                                    .AlignCenter()
-                                    .Text("Qtd / Qty")
-                                    .FontSize(16)
-                                    .Bold();
-                            });
-                        // Table End //
-                        
                         col.Item()
                             .Padding(30)
                             .Text("Obs: ")
@@ -117,8 +139,7 @@ public class GenPdfService
             });
         });
 
-        doc.ShowInCompanion();
+        //doc.ShowInCompanion();
         return doc.GeneratePdf();
-        
     }
 }

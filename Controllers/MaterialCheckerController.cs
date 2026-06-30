@@ -19,7 +19,9 @@ public class MaterialCheckerController : ControllerBase
     public async Task<ActionResult<MaterialDataResDto>> ExtractDataFromPDf(IFormFile pdfFile)
     {
         var memoryStream = new MemoryStream();
+
         await pdfFile.CopyToAsync(memoryStream);
+        
         byte[] fileBytes = memoryStream.ToArray();
         var mimeType = pdfFile.ContentType;
         
@@ -35,17 +37,16 @@ public class MaterialCheckerController : ControllerBase
 
     // Generating a pdf
     [HttpPost("gen-pdf")]
-    public async Task<ActionResult<MissingMaterialDataReqDto>> GenPdf()
+    public ActionResult GenPdf(MissingMaterialDataReqDto dto)
     {
-        _genPdfService.GenPdf();
+        var pdf =_genPdfService.GenPdf(dto);
 
-        return Ok(new
-        {
-            success = true,
-            response = "The Pdf file has been generated"
-        });
+        return File(
+            pdf,
+            "application/pdf",
+            $"{dto.GradeAndYear}_MissingItems.pdf"
+        );
     }
-
 }
 
-                     
+                    
