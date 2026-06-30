@@ -1,3 +1,4 @@
+using GeminiHubApi.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -5,13 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 public class MaterialCheckerController : ControllerBase
 {
     private readonly GeminiService _geminiService;
+    private readonly GenPdfService _genPdfService;
 
-    public MaterialCheckerController(GeminiService geminiService)
+    public MaterialCheckerController(GeminiService geminiService, GenPdfService genPdfService)
     {
         _geminiService = geminiService;
+        _genPdfService = genPdfService;
     }
 
-    [HttpPost("extractDataFromPdf")]
+    // Extracting data from some Supply List pdf
+    [HttpPost("extract-data-from-pdf")]
     public async Task<ActionResult<MaterialDataResDto>> ExtractDataFromPDf(IFormFile pdfFile)
     {
         var memoryStream = new MemoryStream();
@@ -28,4 +32,20 @@ public class MaterialCheckerController : ControllerBase
             response = res
         });
     }
+
+    // Generating a pdf
+    [HttpPost("gen-pdf")]
+    public async Task<ActionResult<MissingMaterialDataReqDto>> GenPdf()
+    {
+        _genPdfService.GenPdf();
+
+        return Ok(new
+        {
+            success = true,
+            response = "The Pdf file has been generated"
+        });
+    }
+
 }
+
+                     

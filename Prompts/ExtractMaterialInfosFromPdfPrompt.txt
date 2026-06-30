@@ -19,6 +19,7 @@ Regras:
 A resposta deve obedecer rigorosamente ao seguinte schema JSON:
 
 {
+"gradeAndYear": "Grade and Year",    
 "requiredMaterials": [
 {
 "topic": "Nome do tópico",

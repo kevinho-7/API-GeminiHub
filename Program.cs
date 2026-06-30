@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<GeminiService>();
+builder.Services.AddScoped<GenPdfService>();
 builder.Services.AddScoped<AskGeminiService>();
 
 var app = builder.Build();
