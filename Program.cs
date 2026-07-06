@@ -12,6 +12,18 @@ builder.Services.AddScoped<GeminiService>();
 builder.Services.AddScoped<GenPdfService>();
 builder.Services.AddScoped<AskGeminiService>();
 
+// Development CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Dev", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,6 +31,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("Dev");
 }
 
 app.UseMiddleware<GlobalExceptionMiddleware>();

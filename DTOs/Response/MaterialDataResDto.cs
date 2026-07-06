@@ -1,7 +1,6 @@
 public class MaterialDataResDto
 {
     public string? GradeAndYear {get; set;}
-    public string? Obs {get; set;}
     public List<MaterialItems>? RequiredMaterials {get; set;}
 }
 

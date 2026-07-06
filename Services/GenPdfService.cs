@@ -46,6 +46,11 @@ public class GenPdfService
                                     .Text("Supply List")
                                     .FontSize(20)
                                     .Italic();
+
+                                col.Item()
+                                    .PaddingTop(5)
+                                    .Text($"{dto.StudentName}")
+                                    .FontSize(15);
                             });
                     });
 
@@ -122,7 +127,7 @@ public class GenPdfService
                                             .Border(1)
                                             .Padding(5)
                                             .AlignCenter()
-                                            .Text($"{material.Quantity}")
+                                            .Text($"{material.MissingQty}")
                                             .FontSize(16);
                                     }
                                 });
@@ -131,7 +136,7 @@ public class GenPdfService
 
                         col.Item()
                             .Padding(30)
-                            .Text("Obs: ")
+                            .Text($"Obs: {dto.Obs}")
                             .FontSize(16)
                             .Bold()
                             .Italic();
@@ -139,7 +144,7 @@ public class GenPdfService
             });
         });
 
-        //doc.ShowInCompanion();
+        doc.ShowInCompanion();
         return doc.GeneratePdf();
     }
 }
