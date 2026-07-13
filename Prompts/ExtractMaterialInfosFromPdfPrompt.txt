@@ -33,7 +33,14 @@ A resposta deve obedecer rigorosamente ao seguinte schema JSON:
 ]
 }
 
-Caso nenhum material seja encontrado, retorne:
+Filtro Crítico de Validação do Documento:
+
+* O documento DEVE ser uma lista de materiais individuais por série/ano letivo (ex: Infantil, 5th Grade, Ensino Médio, Ano, Grau) destinada a alunos/pais.
+*O campo 'gradeAndYear' é OBRIGATÓRIO. Se o documento NÃO indicar explicitamente o ano escolar, série, turma ou segmento pedagógico ao qual a lista se refere, considere o documento INVÁLIDO.
+*Propostas comerciais, orçamentos, cotações de fornecedores, ordens de compra em lote (ex: 50, 100 ou 1000 unidades de notebooks, licenças ou mobiliário para a instituição) ou notas fiscais NÃO são listas de materiais escolares de alunos.
+*Se o documento se enquadrar em qualquer cenário de invalidez citado acima, interrompa a extração imediatamente e não tente inventar tópicos (como "N/A" ou "Geral").
+
+Caso o documento seja inválido ou nenhum material de aluno seja encontrado, retorne estritamente e apenas isto:
 
 {
 "requiredMaterials": []

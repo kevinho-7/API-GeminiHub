@@ -16,8 +16,7 @@ public class MissingMaterialItems
 
 public class MissingMaterial
 {
-    public string? Title {get; set;}
-    public string? Quantity {get; set;}
     public bool? IsMissing {get; set;}
+    public string? Title {get; set;}
     public string? MissingQty {get; set;}
 }

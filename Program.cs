@@ -1,8 +1,11 @@
 using GeminiHubApi.Services;
+using Microsoft.AspNetCore.Components.RenderTree;
 
 DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Console.WriteLine(builder.Environment.EnvironmentName);
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -20,7 +23,8 @@ builder.Services.AddCors(options =>
         policy
             .AllowAnyOrigin()
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .WithExposedHeaders("Content-Disposition");
     });
 });
 
@@ -43,3 +47,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+

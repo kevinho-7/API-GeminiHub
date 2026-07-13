@@ -70,7 +70,7 @@ public class GeminiService
 
         if(dtoRes?.RequiredMaterials!.Count == 0)
         {
-            throw new NullException("This PDF file is not Supply List");
+            throw new NullException("This PDF file is not a Supply List");
         }
 
         return dtoRes!;

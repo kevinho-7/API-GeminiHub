@@ -134,12 +134,15 @@ public class GenPdfService
                             // Table End //
                         }
 
-                        col.Item()
-                            .Padding(30)
-                            .Text($"Obs: {dto.Obs}")
-                            .FontSize(16)
-                            .Bold()
-                            .Italic();
+                        if(!string.IsNullOrWhiteSpace(dto.Obs))
+                        {
+                            col.Item()
+                                .Padding(30)
+                                .Text($"Obs: {dto.Obs}")
+                                .FontSize(16)
+                                .Bold()
+                                .Italic();
+                        }
                     });  
             });
         });
