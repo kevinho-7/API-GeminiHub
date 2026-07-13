@@ -5,7 +5,7 @@ DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Console.WriteLine(builder.Environment.EnvironmentName);
+Console.WriteLine(builder.Environment.EnvironmentName);
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -36,6 +36,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseCors("Dev");
+}
+
+if (app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
