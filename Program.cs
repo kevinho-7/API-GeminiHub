@@ -26,6 +26,15 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .WithExposedHeaders("Content-Disposition");
     });
+
+    options.AddPolicy("Prod", policy =>
+    {
+       policy.WithOrigins(
+            "http://localhost/graficos_coordenadores"
+       )
+       .AllowAnyHeader()
+       .AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();
@@ -42,6 +51,7 @@ if (app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("Prod");
 }
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
