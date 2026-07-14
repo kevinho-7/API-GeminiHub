@@ -13,6 +13,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.17" />
     <PackageReference Include="QuestPDF" Version="2026.6.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <Content Include="Prompts\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
-
 </Project>

@@ -30,7 +30,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Prod", policy =>
     {
        policy.WithOrigins(
-            "http://localhost/graficos_coordenadores"
+            "http://localhost"
        )
        .AllowAnyHeader()
        .AllowAnyMethod();

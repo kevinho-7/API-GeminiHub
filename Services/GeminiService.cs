@@ -8,6 +8,8 @@ public class GeminiService
 {
     public Client client = new Client();
 
+    public string basePath =  AppContext.BaseDirectory;
+
     public async Task<AskGeminiResDto> GenSomethingAsync(AskGeminiReqDto prompt)
     {
         var text = prompt.Prompt;
@@ -31,7 +33,12 @@ public class GeminiService
             throw new InvalidFormatException();
         }
 
-        string promptFilePath = "./Prompts/ExtractMaterialInfosFromPdfPrompt.txt";
+        string promptFilePath = Path.Combine(
+            basePath,
+            "Prompts",
+            "ExtractMaterialInfosFromPdfPrompt.txt"
+        );
+
         var prompt = System.IO.File.ReadAllText(promptFilePath);
 
         var res = await client.Models.GenerateContentAsync(
