@@ -47,6 +47,7 @@ Caso o documento seja inválido ou nenhum material de aluno seja encontrado, ret
 }
 
 * Não retorne nenhum tipo de Link no campo 'title'.
-* Nos campos de 'quantity', se por acaso nao for identificado a quanditade, retorne "quantity" = "true" (o "true" como uma string e não bool)
-* Ainda nos campos 'quantity', se 'quantity', que é uma string, for no formato com 0 na frente do numero, por exemplo: 01. Retorne ele no formato simples, por exemplo: 1, ainda como string
+* Nos campos de 'quantity', se por acaso nao for identificado a quanditade, retorne "quantity" = "1".
+* Ainda nos campos 'quantity', se 'quantity', que é uma string, for no formato com 0 na frente do numero, por exemplo: 01. Retorne ele no formato simples, por exemplo: 1, ainda como string.
+* Ainda nos campos 'quantity', se a quantidade contiver uma unidade de medida ou letras coladas ao número (ex: 1cx, 1m, 1Kg, 2un), separe o número da unidade/letra com exatamente um espaço em branco (ex: "1 cx", "1 m", "1 Kg", "2 un").
 * Se o texto no campo 'topic' ou 'title' ter texto no idioma Portugues e no idioma Ingles separados pelo caractere '/', retorne apenas o texto que estiver no idioma Portugues, mas para os campos 'title' onde o campo 'quantity' esta setado para a string 'true', ignore o comando que fiz para pegar apenas 1 idioma. 

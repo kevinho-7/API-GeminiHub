@@ -146,8 +146,7 @@ public class GenPdfService
                     });  
             });
         });
-
-        doc.ShowInCompanion();
+        
         return doc.GeneratePdf();
     }
 }
