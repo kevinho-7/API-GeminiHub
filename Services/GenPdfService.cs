@@ -6,9 +6,16 @@ using QuestPDF.Infrastructure;
 
 public class GenPdfService
 {
+    public string basePath = AppContext.BaseDirectory;
     public byte[] GenPdf(MissingMaterialDataReqDto dto)
     {
         QuestPDF.Settings.License = LicenseType.Community;
+
+        string imgPath = Path.Combine(
+            basePath,
+            "Images",
+            "logo_santanna.png"
+        );
 
         var doc = Document.Create(container =>
         {
@@ -26,7 +33,7 @@ public class GenPdfService
                     .Row(row =>
                     {
                         row.ConstantItem(120)
-                            .Image("./Images/logo_santanna.png");
+                            .Image(imgPath);
 
                         row.RelativeItem(300)
                             .Padding(15)
@@ -147,7 +154,7 @@ public class GenPdfService
             });
         });
 
-        doc.ShowInCompanion();
+        doc.ShowInCompanion(17500);
         return doc.GeneratePdf();
     }
 }
