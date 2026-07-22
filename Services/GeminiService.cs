@@ -41,39 +41,46 @@ public class GeminiService
 
         var prompt = System.IO.File.ReadAllText(promptFilePath);
 
-        var res = await client.Models.GenerateContentAsync(
-            model: "gemini-3.1-flash-lite",
-            contents: new List<Content>
+        var content = new List<Content>
+        {
+            new Content
             {
-                new Content
+                Parts = new List<Part>
                 {
-                    Parts = new List<Part>
+                    new Part 
                     {
-                        new Part 
+                        InlineData = new Blob
                         {
-                            InlineData = new Blob
-                            {
-                                Data = fileBytes,
-                                MimeType = mimeType
-                            }
-                        },
-                        new Part
-                        {
-                            Text = prompt
+                            Data = fileBytes,
+                            MimeType = mimeType
                         }
+                    },
+                    new Part
+                    {
+                        Text = prompt
                     }
                 }
-            },
+            }
+        };
+
+        var res = await client.Models.GenerateContentAsync(
+            model: "gemini-3.5-flash-lite",
+            contents: content,
             config: new GenerateContentConfig
             {
                 ResponseMimeType = "application/json"
             }
         );
 
-        var dtoRes = JsonSerializer.Deserialize<MaterialDataResDto>(res.Text! , new JsonSerializerOptions
-        {
-           PropertyNameCaseInsensitive = true 
-        });
+        var countTokens = await client.Models.CountTokensAsync(model: "gemini-3.5-flash-lite", contents: content);
+        Console.WriteLine(countTokens);
+
+        var dtoRes = JsonSerializer.Deserialize<MaterialDataResDto>(
+            res.Text! , new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true 
+            }
+        );
 
         if(dtoRes?.RequiredMaterials!.Count == 0)
         {
