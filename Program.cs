@@ -30,6 +30,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Prod", policy =>
     {
        policy.WithOrigins(
+            "https://sistema.santanna.g12.br",
             "http://localhost"
        )
        .AllowAnyHeader()
